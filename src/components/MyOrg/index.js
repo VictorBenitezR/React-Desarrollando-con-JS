@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./myOrg.css";
 
 const MyOrg = (props) => {

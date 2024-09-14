@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./form.css";
-import Textfield from "../textfield/textfield";
+import Field from "../field/field";
 import Optionlist from "../optionslist";
 import Button from "../button";
 //si le llamaba index.js al poner la ruta de la carpeta iba a leer de manera automatica
@@ -11,7 +11,10 @@ const Form = (props) => {
     const [photo, setPhoto] = useState("")
     const [team, setTeam] = useState("")
 
-    const {registerCollaborator, teams} = props
+    const [title, setTitle] = useState("")
+    const [color, setColor] = useState("")
+
+    const {registerCollaborator, teams, createTeam} = props
 
     const manejarEnvio = (e) => {
         e.preventDefault()
@@ -25,24 +28,29 @@ const Form = (props) => {
         registerCollaborator(dataToSend)
     }
 
+    const handleNewTeam = (e) => {
+        e.preventDefault()
+        createTeam({title, primaryColor: color})
+    }
+
     return <section className="formulario">
         <form onSubmit={manejarEnvio}>
             <h2>Rellena el formulario para crear el colaborador.</h2>
-            <Textfield 
+            <Field 
                 titulo="Nombre" 
                 placeholder="Ingresar nombre" 
                 required
                 value={name}
                 setValue={setName}    
             />
-            <Textfield 
+            <Field 
                 titulo="Puesto" 
                 placeholder="Ingresar puesto" 
                 required
                 value={workstation}
                 setValue={setWorkstation}
             />
-            <Textfield 
+            <Field 
                 titulo="Foto" 
                 placeholder="Ingresar enlace de foto" 
                 required
@@ -56,6 +64,27 @@ const Form = (props) => {
             />
             <Button>
                 Crear
+            </Button>
+        </form>
+        <form onSubmit={handleNewTeam}>
+            <h2>Rellena el formulario para crear el equipo.</h2>
+            <Field 
+                titulo="Titulo" 
+                placeholder="Ingresar titulo" 
+                required
+                value={title}
+                setValue={setTitle}    
+            />
+            <Field 
+                titulo="Color" 
+                placeholder="Ingresar el color en Hex" 
+                required
+                value={color}
+                setValue={setColor}
+                type="color"
+            />
+            <Button>
+                Registrar equipo
             </Button>
         </form>
     </section>
